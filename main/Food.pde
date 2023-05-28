@@ -9,7 +9,7 @@ class Food {
     
     void show() {
        stroke(0);
-       fill(#FF8200);
+       fill(#EDDC11);
        rect(pos.x,pos.y,SIZE,SIZE);
     }
     

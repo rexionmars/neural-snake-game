@@ -73,7 +73,7 @@ class NeuralNet {
   }
   
   void show(float x, float y, float w, float h, float[] vision, float[] decision) {
-     float space = 10; //Size node
+     float space = 11; //Size node
      float nSize = (h - (space*(iNodes-2))) / iNodes;
      float nSpace = (w - (weights.length*nSize)) / weights.length;
      float hBuff = (h - (space*(hNodes-1)) - (nSize*hNodes))/2;
@@ -91,39 +91,44 @@ class NeuralNet {
      //DRAW NODES
      for(int i = 0; i < iNodes; i++) {  //DRAW INPUTS
          if(vision[i] != 0) {
-           fill(255,150,84);
+           fill(#2DFF00);
+           //text(i,x+(nSize/2),y+(nSize/2)+(i*(nSize+5)));
          } else {
-           fill(255, 200, 166); 
+           fill(#414141); 
          }
-         stroke(153);
+         //stroke(0);
+         //noStroke();
          ellipseMode(CORNER);
          ellipse(x,y+(i*(nSize+5)),nSize,nSize);
          
          textSize(nSize/2);
          textAlign(CENTER,CENTER);
          fill(0);
-        //text(i,x+(nSize/2),y+(nSize/2)+(i*(nSize+5)));
+         //text(i,x+(nSize/2),y+(nSize/2)+(i*(nSize+5)));
      }
      
      lc++;
      
+     //DRAW HIDDEN
      for(int a = 0; a < hLayers; a++) {
-       for(int i = 0; i < hNodes; i++) {  //DRAW HIDDEN
-           fill(200);
-           stroke(153);
+       for(int i = 0; i < hNodes; i++) {
+           fill(#2D2D2D);
+           //stroke(255);
+           noStroke();
            ellipseMode(CORNER);
            ellipse(x+(lc*nSize)+(lc*nSpace),y+hBuff+(i*(nSize+5)),nSize,nSize);
        }
        lc++;
      }
      
-     for(int i = 0; i < oNodes; i++) {  //DRAW OUTPUTS
+     //DRAW OUTPUTS
+     for(int i = 0; i < oNodes; i++) {
          if(i == maxIndex) {
-           fill(#A5FF7F);
+           fill(#2DFF00);
          } else {
-           fill(#D5FFC3); 
+           fill(#414141); 
          }
-         stroke(153);
+         noStroke();
          ellipseMode(CORNER);
          ellipse(x+(lc*nSpace)+(lc*nSize),y+oBuff+(i*(nSize+5)),nSize,nSize);
      }
@@ -133,12 +138,10 @@ class NeuralNet {
      //DRAW WEIGHTS
      for(int i = 0; i < weights[0].rows; i++) {  //INPUT TO HIDDEN
         for(int j = 0; j < weights[0].cols-1; j++) {
-            if(weights[0].matrix[i][j] < 0) {
-               stroke(#FFB16F); // Active
-            } else {
-               stroke(#9B9B9B); // Blue
-            }
-            line(x+nSize,y+(nSize/2)+(j*(5+nSize)),x+nSize+nSpace,y+hBuff+(nSize/2)+(i*(5+nSize)));
+            if(weights[0].matrix[i][j] < 0 & vision[i] != 0) {
+               stroke(#2DFF00); // Active
+               line(x+nSize,y+(nSize/2)+(j*(5+nSize)),x+nSize+nSpace,y+hBuff+(nSize/2)+(i*(5+nSize))); // Draw only active neuron
+            }   
         }
      }
      
@@ -147,12 +150,13 @@ class NeuralNet {
      for(int a = 1; a < hLayers; a++) {
        for(int i = 0; i < weights[a].rows; i++) {  //HIDDEN TO HIDDEN
           for(int j = 0; j < weights[a].cols-1; j++) {
-              if(weights[a].matrix[i][j] < 0) {
-                 stroke(#FFB16F); 
+              if(weights[a].matrix[i][j] < 0 & vision[i] != 0) {
+                 stroke(#4A4A49);
+                 line(x+(lc*nSize)+((lc-1)*nSpace),y+hBuff+(nSize/2)+(j*(5+nSize)),x+(lc*nSize)+(lc*nSpace),y+hBuff+(nSize/2)+(i*(5+nSize)));
               } else {
-                 stroke(#9B9B9B); 
-              }
-              line(x+(lc*nSize)+((lc-1)*nSpace),y+hBuff+(nSize/2)+(j*(5+nSize)),x+(lc*nSize)+(lc*nSpace),y+hBuff+(nSize/2)+(i*(5+nSize)));
+                //stroke(#2D2D2D);
+                //line(x+(lc*nSize)+((lc-1)*nSpace),y+hBuff+(nSize/2)+(j*(5+nSize)),x+(lc*nSize)+(lc*nSpace),y+hBuff+(nSize/2)+(i*(5+nSize)));
+             }
           }
        }
        lc++;
@@ -160,17 +164,18 @@ class NeuralNet {
      
      for(int i = 0; i < weights[weights.length-1].rows; i++) {  //HIDDEN TO OUTPUT
         for(int j = 0; j < weights[weights.length-1].cols-1; j++) {
-            if(weights[weights.length-1].matrix[i][j] < 0) {
-               stroke(#FFB16F); 
+            if(weights[weights.length-1].matrix[i][j] < 0 & vision[i] != 0) {
+               stroke(#2DFF00);
+               line(x+(lc*nSize)+((lc-1)*nSpace),y+hBuff+(nSize/2)+(j*(5+nSize)),x+(lc*nSize)+(lc*nSpace),y+oBuff+(nSize/2)+(i*(5+nSize)));
             } else {
-               stroke(#9B9B9B); 
-            }
-            line(x+(lc*nSize)+((lc-1)*nSpace),y+hBuff+(nSize/2)+(j*(5+nSize)),x+(lc*nSize)+(lc*nSpace),y+oBuff+(nSize/2)+(i*(5+nSize)));
+                //stroke(#2D2D2D);
+                //line(x+(lc*nSize)+((lc-1)*nSpace),y+hBuff+(nSize/2)+(j*(5+nSize)),x+(lc*nSize)+(lc*nSpace),y+oBuff+(nSize/2)+(i*(5+nSize)));
+             }
         }
      }
      
-     fill(0);
-     textSize(13);
+     fill(#5FFF00);
+     textSize(15);
      textAlign(LEFT,CENTER);
      text("U",x+(lc*nSize)+(lc*nSpace)+25,y+oBuff+(nSize/2));
      text("D",x+(lc*nSize)+(lc*nSpace)+25,y+oBuff+5+nSize+(nSize/2));

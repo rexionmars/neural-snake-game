@@ -1,24 +1,21 @@
-final int SIZE = 10;
+final int SIZE = 20;
 final int hidden_nodes = 16;
 final int hidden_layers = 2;
-final int fps = 100;  //15 is ideal for self play, increasing for AI does not directly increase speed, speed is dependant on processing power
+final int fps = 200;  //15 is ideal for self play, increasing for AI does not directly increase speed, speed is dependant on processing power
 
 int highscore = 0;
 
-float mutationRate = 0.05;
+float mutationRate = 0.10;
 float defaultmutation = mutationRate;
 
 boolean humanPlaying = false;  //false for AI, true to play yourself
 boolean replayBest = true;  //shows only the best of each generation
-boolean seeVision = false;  //see the snakes vision
+boolean seeVision = true;  //see the snakes vision
 boolean modelLoaded = false;
 
 PFont font;
 
 ArrayList<Integer> evolution;
-
-Button increaseMut;
-Button decreaseMut;
 
 
 Snake snake;
@@ -27,14 +24,12 @@ Snake model;
 Population pop;
 
 public void settings() {
-  size(1000,660);
+  size(1200,680);
 }
 
 void setup() {
   font = createFont("agencyfb-bold.ttf",32);
   evolution = new ArrayList<Integer>();
-  increaseMut = new Button(340,85,20,20,"+");
-  decreaseMut = new Button(365,85,20,20,"-");
   frameRate(fps);
   if(humanPlaying) {
     snake = new Snake();
@@ -44,20 +39,13 @@ void setup() {
 }
 
 void draw() {
-  background(#E5E5E5);
-  
-  //background(255);
-  //rect(0, 0, width, borderStroke); // Top
-  //rect(width-borderStroke, 0, borderStroke, height); // Right
-  //rect(0, height-borderStroke, width, borderStroke); // Bottom
-  //rect(0, 0, borderStroke, height); // Left
-
+  background(#1C2128); // Window background
   noFill();
   //fill(#000000);
-  stroke(0);
-  line(400,0,400,height);
+  //stroke(0);
+  //line(400,0,400,height);
   rectMode(CORNER);
-  rect(400 + SIZE,SIZE,width-400-20,height-20);
+  rect(400 + SIZE,SIZE,width-400-40,height-40);
   textFont(font);
   if(humanPlaying) {
     snake.move();
@@ -87,8 +75,6 @@ void draw() {
       text("MUTATION RATE : "+mutationRate*100+"%",120,80);
       text("SCORE : "+pop.bestSnake.score,120,height-15);
       text("HIGHSCORE : "+highscore,120,height-5);
-      increaseMut.show();
-      decreaseMut.show();
     } else {
       model.look();
       model.think();
@@ -106,17 +92,6 @@ void draw() {
      textAlign(LEFT);
      text("SCORE : "+model.score,120,height-45);
     }
-    /*
-    textAlign(LEFT);
-    textSize(18);
-    fill(#FFB16F);
-    text("ORANGE < 0",120,height-75);
-    fill(#9B9B9B);
-    text("GRAY > 0",200,height-75);
-    graphButton.show();
-    loadButton.show();
-    saveButton.show();
-    */
   }
 
 }
