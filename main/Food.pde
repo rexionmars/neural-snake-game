@@ -2,8 +2,8 @@ class Food {
     PVector pos;
     
     Food() {
-      int x = 400 + SIZE + floor(random(38))*SIZE;
-      int y = SIZE + floor(random(38))*SIZE;
+      int x = 500 + SIZE + floor(random(10))*SIZE;
+      int y = SIZE + floor(random(10))*SIZE;
       pos = new PVector(x,y);
     }
     

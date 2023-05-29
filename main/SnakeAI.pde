@@ -1,16 +1,16 @@
 final int SIZE = 20;
-final int hidden_nodes = 16;
-final int hidden_layers = 2;
+final int hidden_nodes = 18;
+final int hidden_layers = 4;
 final int fps = 200;  //15 is ideal for self play, increasing for AI does not directly increase speed, speed is dependant on processing power
 
 int highscore = 0;
 
-float mutationRate = 0.10;
+float mutationRate = 0.05;
 float defaultmutation = mutationRate;
 
 boolean humanPlaying = false;  //false for AI, true to play yourself
 boolean replayBest = true;  //shows only the best of each generation
-boolean seeVision = true;  //see the snakes vision
+boolean seeVision = false;  //see the snakes vision
 boolean modelLoaded = false;
 
 PFont font;

@@ -73,7 +73,7 @@ class NeuralNet {
   }
   
   void show(float x, float y, float w, float h, float[] vision, float[] decision) {
-     float space = 11; //Size node
+     float space = 9; //Size node
      float nSize = (h - (space*(iNodes-2))) / iNodes;
      float nSpace = (w - (weights.length*nSize)) / weights.length;
      float hBuff = (h - (space*(hNodes-1)) - (nSize*hNodes))/2;
