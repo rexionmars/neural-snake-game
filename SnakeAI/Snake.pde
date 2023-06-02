@@ -31,11 +31,11 @@ class Snake {
     food = new Food();
     body = new ArrayList<PVector>();
     if(!humanPlaying) {
-      vision = new float[33];
+      vision = new float[24];
       decision = new float[4];
       foodList = new ArrayList<Food>();
       foodList.add(food.clone());
-      brain = new NeuralNet(33,hidden_nodes,4,layers);//////
+      brain = new NeuralNet(24,hidden_nodes,4,layers);//////
       body.add(new PVector(800,(height/2)+SIZE));  
       body.add(new PVector(800,(height/2)+(2*SIZE)));
       score+=2;
@@ -44,7 +44,7 @@ class Snake {
   
   Snake(ArrayList<Food> foods) {  //this constructor passes in a list of food positions so that a replay can replay the best snake
      replay = true;
-     vision = new float[33];
+     vision = new float[24];
      decision = new float[4];
      body = new ArrayList<PVector>();
      foodList = new ArrayList<Food>(foods.size());
@@ -84,7 +84,7 @@ class Snake {
   
   void show() {  //show the snake
      food.show();
-     fill(#E0A008);
+     fill(#2DFF00);
      noStroke();
      for(int i = 0; i < body.size(); i++) {
        rect(body.get(i).x,body.get(i).y,SIZE,SIZE);
@@ -121,9 +121,9 @@ class Snake {
     int len = body.size()-1;
     score++;
     if(!humanPlaying && !modelLoaded) {
-      if(lifeLeft < 500) {
+      if(lifeLeft < 240) {
         if(lifeLeft > 400) {
-           lifeLeft = 500; 
+           lifeLeft = 240; 
         } else {
           lifeLeft+=100;
         }
@@ -198,7 +198,7 @@ class Snake {
   }
   
   void look() {  //look in all 8 directions and check for food, body and wall
-    vision = new float[33];
+    vision = new float[24];
     float[] temp = lookInDirection(new PVector(-SIZE,0));
     vision[0] = temp[0];
     vision[1] = temp[1];
@@ -231,18 +231,6 @@ class Snake {
     vision[21] = temp[0];
     vision[22] = temp[1];
     vision[23] = temp[2];
-    temp = lookInDirection(new PVector(-SIZE,0));
-    vision[24] = temp[0];
-    vision[25] = temp[1];
-    vision[26] = temp[2];
-    temp = lookInDirection(new PVector(0,-SIZE));
-    vision[27] = temp[0];
-    vision[28] = temp[1];
-    vision[29] = temp[2];
-    temp = lookInDirection(new PVector(-SIZE,SIZE));
-    vision[30] = temp[0];
-    vision[31] = temp[1];
-    vision[32] = temp[2];
   }
 
   float[] lookInDirection(PVector direction) {  //look in a direction and check for food, body and wall

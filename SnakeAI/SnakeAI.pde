@@ -1,6 +1,6 @@
 final int SIZE = 20;
-final int hidden_nodes = 18;
-final int hidden_layers = 4;
+final int hidden_nodes = 22;
+final int hidden_layers = 5;
 final int fps = 200;  //15 is ideal for self play, increasing for AI does not directly increase speed, speed is dependant on processing power
 
 int highscore = 0;
@@ -24,7 +24,7 @@ Snake model;
 Population pop;
 
 public void settings() {
-  size(1200,680);
+  size(1200,640);
 }
 
 void setup() {
@@ -42,7 +42,8 @@ void draw() {
   background(#1C2128); // Window background
   noFill();
   //fill(#000000);
-  //stroke(0);
+  //stroke(0)
+  strokeWeight(1);;
   //line(400,0,400,height);
   rectMode(CORNER);
   rect(400 + SIZE,SIZE,width-400-40,height-40);
@@ -50,9 +51,9 @@ void draw() {
   if(humanPlaying) {
     snake.move();
     snake.show();
-    fill(150);
+    fill(130);
     textSize(12);
-    text("SCORE : "+snake.score,500,50);
+    text("SCORE : "+snake.score,300,30);
     if(snake.dead) {
        snake = new Snake(); 
     }
@@ -66,13 +67,13 @@ void draw() {
           pop.update();
           pop.show(); 
       }
-      fill(150);
+      fill(130);
       textSize(12);
       textAlign(LEFT);
-      text("GEN : "+pop.gen,120,60);
-      text("BEST FITNESS : "+pop.bestFitness,120,50);
-      text("MOVES LEFT : "+pop.bestSnake.lifeLeft,120,70);
-      text("MUTATION RATE : "+mutationRate*100+"%",120,80);
+      text("GEN : "+pop.gen,120,height-60);
+      text("BEST FITNESS : "+pop.bestFitness,120,height-30);
+      text("MOVES LEFT : "+pop.bestSnake.lifeLeft,120,height-40);
+      text("MUTATION RATE : "+mutationRate*100+"%",120,height-50);
       text("SCORE : "+pop.bestSnake.score,120,height-15);
       text("HIGHSCORE : "+highscore,120,height-5);
     } else {
@@ -88,31 +89,10 @@ void draw() {
         
      }
      textSize(25);
-     fill(150);
+     fill(130);
      textAlign(LEFT);
      text("SCORE : "+model.score,120,height-45);
     }
   }
 
-}
-
-void keyPressed() {
-  if(humanPlaying) {
-    if(key == CODED) {
-       switch(keyCode) {
-          case UP:
-            snake.moveUp();
-            break;
-          case DOWN:
-            snake.moveDown();
-            break;
-          case LEFT:
-            snake.moveLeft();
-            break;
-          case RIGHT:
-            snake.moveRight();
-            break;
-       }
-    }
-  }
 }
